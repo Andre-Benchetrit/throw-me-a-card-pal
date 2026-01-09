@@ -8,7 +8,23 @@ cards = [
     "A de Espadas", "2 de Espadas", "3 de Espadas", "4 de Espadas", "5 de Espadas", "6 de Espadas", "7 de Espadas", "8 de Espadas", "9 de Espadas", "10 de Espadas", "Valete de Espadas", "Dama de Espadas", "Rei de Espadas"
 ]
 
+deck = []
+
 @commands.command(name="card", help="Sorteia uma carta aleatória.")
 async def card(ctx):
-    card = random.choice(cards)
+    global deck
+
+    if not deck:
+        deck = cards.copy()
+        random.shuffle(deck)
+
+    card = deck.pop()
     await ctx.send(f"A carta sorteada foi: {card}")
+    
+
+@commands.command(name="shuffle", help="Embaralha o baralho.")
+async def shuffle(ctx):
+    global deck
+    deck = cards.copy()
+    random.shuffle(deck)
+    await ctx.send("O baralho foi embaralhado.")

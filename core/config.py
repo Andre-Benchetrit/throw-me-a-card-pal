@@ -1,0 +1,2 @@
+MAX_DICE = 20
+MAX_FACES = 100
