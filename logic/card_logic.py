@@ -1,17 +1,13 @@
 import random
 cards = [
-    "A ♥", "2 ♥", "3 ♥", "4 ♥", "5 ♥", "6 ♥", "7 ♥", "8 ♥", "9 ♥", "10 ♥", "Valete ♥", "Dama ♥", "Rei ♥",
-    "A ♦", "2 ♦", "3 ♦", "4 ♦", "5 ♦", "6 ♦", "7 ♦", "8 ♦", "9 ♦", "10 ♦", "Valete ♦", "Dama ♦", "Rei ♦",
-    "A ♣", "2 ♣", "3 ♣", "4 ♣", "5 ♣", "6 ♣", "7 ♣", "8 ♣", "9 ♣", "10 ♣", "Valete ♣", "Dama ♣", "Rei ♣",
-    "A ♠", "2 ♠", "3 ♠", "4 ♠", "5 ♠", "6 ♠", "7 ♠", "8 ♠", "9 ♠", "10 ♠", "Valete ♠", "Dama ♠", "Rei ♠",
+    "A ♥", "2 ♥", "3 ♥", "4 ♥", "5 ♥", "6 ♥", "7 ♥", "8 ♥", "9 ♥", "10 ♥", "J ♥", "Q ♥", "K ♥",
+    "A ♦", "2 ♦", "3 ♦", "4 ♦", "5 ♦", "6 ♦", "7 ♦", "8 ♦", "9 ♦", "10 ♦", "J ♦", "Q ♦", "K ♦",
+    "A ♣", "2 ♣", "3 ♣", "4 ♣", "5 ♣", "6 ♣", "7 ♣", "8 ♣", "9 ♣", "10 ♣", "J ♣", "Q ♣", "K ♣",
+    "A ♠", "2 ♠", "3 ♠", "4 ♠", "5 ♠", "6 ♠", "7 ♠", "8 ♠", "9 ♠", "10 ♠", "J ♠", "Q ♠", "K ♠",
     "Joker!"
 ]
 
 special_cards = [
-    "Valete ♥", "Dama ♥", "Rei ♥",
-    "Valete ♦", "Dama ♦", "Rei ♦",
-    "Valete ♣", "Dama ♣", "Rei ♣",
-    "Valete ♠", "Dama ♠", "Rei ♠",
     "Joker!"
 ]
 
@@ -39,7 +35,7 @@ def card_throw():
 
     return card, len(deck), is_special
 
-def card_shuffle():
+def card_shuffle() -> int:
     deck.clear()
     deck.extend(cards)
     random.shuffle(deck)
