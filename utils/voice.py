@@ -10,4 +10,6 @@ async def play_audio(ctx_or_message, path):
     if not vc:
         vc = await channel.connect()
 
-    vc.play(discord.FFmpegPCMAudio(path))
+    source = discord.FFmpegPCMAudio(path)
+    source = discord.PCMVolumeTransformer(source, volume=0.5)
+    vc.play(source)
