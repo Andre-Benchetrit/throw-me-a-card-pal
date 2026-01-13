@@ -75,6 +75,8 @@ Once the bot is running and connected to your Discord server, you can use the fo
 ### Card Commands
 - `?card` - Draws a random card from the deck
 - `?shuffle` - Shuffles the deck, returning all cards to the deck
+<img width="1029" height="689" alt="image" src="https://github.com/user-attachments/assets/6f08cb21-1423-43f1-a123-5c79e62c8f3e" />
+
 
 ### Dice Commands
 - `?1d20` - Rolls a single 20-sided die
@@ -82,9 +84,12 @@ Once the bot is running and connected to your Discord server, you can use the fo
 - `?d100` - Rolls a 100-sided die
 - `?2d20kh` - Rolls 2 twenty-sided dice and keeps the highest value
 - `?4d6kl3` - Rolls 4 six-sided dice and keeps the lowest 3 values
+<img width="540" height="315" alt="image" src="https://github.com/user-attachments/assets/6a27d283-1d92-446e-b8dd-c334672e6d42" />
 
 ### Coin Command
 - `?coin` - Flips a coin (results in "Heads" or "Tails")
+<img width="986" height="669" alt="image" src="https://github.com/user-attachments/assets/d050bdf6-37b4-447d-8a7e-a125e4ccbb43" />
+
 
 ## Configuration
 
