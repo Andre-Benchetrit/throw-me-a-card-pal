@@ -52,9 +52,9 @@ def roll_expression(expr: str) -> RollResult:
                 return RollResult(0, [], f"Máximo de faces permitido: {MAX_FACES}")
 
             resultados = [random.randint(1, faces) for _ in range(qtd)]
+            resultados.sort(reverse=True)
             usados = resultados.copy()
-
-            # 🔝 KEEP
+            
             if keep_raw:
                 keep_type = keep_raw[:2]
                 keep_count = int(keep_n) if keep_n else 1
@@ -71,8 +71,14 @@ def roll_expression(expr: str) -> RollResult:
             subtotal = sum(usados) * sign
             total += subtotal
 
+            resultados_fmt = [
+                f"**{r}**" if r == 1 or r == faces else str(r)
+                for r in resultados
+            ]
+            resultados_str = f"[{', '.join(resultados_fmt)}]"
+
             detalhes.append(
-                f"{term} → {resultados} → {subtotal}"
+                f"{term} → {resultados_str} → {subtotal}"
             )
 
         else:
@@ -81,7 +87,6 @@ def roll_expression(expr: str) -> RollResult:
                 total += valor
                 detalhes.append(f"{term} → {valor}")
             except ValueError:
-                # Ignorar termos inválidos em vez de retornar erro
                 continue
 
     return RollResult(total, detalhes)
