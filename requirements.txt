@@ -4,3 +4,4 @@ PyNaCl
 pymupdf
 tqdm
 google-genai
+numpy
