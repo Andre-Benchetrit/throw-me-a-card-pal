@@ -18,3 +18,6 @@ from commands.dice import on_message as dice_on_message
 async def on_message(message):
     await dice_on_message(message)
     await bot.process_commands(message)
+
+from commands.rules import rules
+bot.add_command(rules)

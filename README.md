@@ -1,108 +1,186 @@
-# throw-me-a-card-pal-
-A customized bot for dice and cards throwing, with sound effects and others features to make a better experience playing Sacramento RPG.
+# 🤠 Throw Me a Card, Pal!
 
-## Features
+A customized Discord bot for dice and card throwing — now featuring **Cowboy AI**, an intelligent assistant that answers **Sacramento RPG rule questions** directly from the rulebook.
 
-- 🎲 Dice rolling with support for multiple dice types and modifiers (e.g., `?2d6+3`, `?1d20`)
-- 🃏 Card drawing from a standard 52-card deck plus Joker
-- 🎵 Sound effects for special cards (Jokers)
-- 💰 Coin flipping functionality
-- 🔄 Deck shuffling capability
+Built to enhance immersion at the table, automate mechanics, and keep the game flowing smoothly.
 
-## Installation
+---
+
+## ✨ Features
+
+### 🎲 Dice System
+- Roll any dice format (`?1d20`, `?2d6+3`, `?4d6kl3`, `?2d20kh`)
+- Modifier and keep-high/keep-low support
+
+### 🃏 Card System
+- Draw cards from a 52-card deck + Joker
+- Shuffle deck anytime
+
+### 💰 Coin Flip
+- Simple heads or tails with `?coin`
+
+### 🎵 Audio Effects
+- Special sound effects for Jokers
+- Fully immersive table experience
+
+---
+
+## 🤖 Cowboy AI — Sacramento Rule Assistant
+
+Ask rule questions directly in Discord:
+
+?rules Posso atacar duas vezes no mesmo turno?
+
+Cowboy AI will:
+
+- Search the Sacramento RPG book semantically  
+- Locate the most relevant rule passages  
+- Answer in natural language  
+- Always cite the correct page  
+- Never invent rules outside the provided text  
+
+Powered by:
+
+- SentenceTransformers embeddings  
+- Hybrid vector + keyword search (SQLite)  
+- Gemini LLM (Google AI)  
+- Retrieval-Augmented Generation (RAG)
+
+---
+
+## ⚖️ Legal Notice
+
+This repository does not include:
+
+- The Sacramento RPG PDF  
+- Extracted text pages  
+- Generated chunks  
+- Embedding database  
+
+To use Cowboy AI, you must provide your legally acquired Sacramento RPG PDF locally and run the ingestion scripts to generate your own database.
+
+No copyrighted content is distributed in this repository.
+
+---
+
+## 🧩 Project Structure
+
+core/        -> RAG, embeddings, vector search, Gemini client  
+commands/    -> Discord bot commands (dice, cards, rules, etc.)  
+scripts/     -> PDF extraction, chunking, embedding generation  
+data/        -> (local only) chunks and embeddings database  
+assets/pdf/  -> (local only) Sacramento PDF  
+bot.py       -> Discord bot entry point  
+
+---
+
+## ⚙️ Installation
 
 ### Prerequisites
 
-Before installing the bot, you need to have the following installed on your system:
+- Python 3.9+
+- pip
+- Git
+- FFmpeg (for audio)
 
-- Python 3.8 or higher
-- pip package manager
-- Git (for cloning the repository)
+---
 
-On Windows, you'll also need to install **FFmpeg** for audio playback. On Linux/macOS, FFmpeg can be installed via package managers (see below).
+### Clone repository
 
-### Installing FFmpeg
+git clone https://github.com/yourusername/throw-me-a-card-pal.git  
+cd throw-me-a-card-pal
 
-#### Windows
-1. Download FFmpeg from https://ffmpeg.org/download.html
-2. Extract the archive to a folder (e.g., `C:\ffmpeg`)
-3. Add the `bin` folder to your system PATH environment variable
+---
 
-#### Linux (Ubuntu/Debian)
-```bash
-sudo apt update
-sudo apt install ffmpeg
-```
+### Create virtual environment
 
-#### macOS
-```bash
-brew install ffmpeg
-```
+python -m venv venv  
+source venv/bin/activate  
+(Windows: venv\Scripts\activate)
 
-### Setting up the Bot
+---
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/throw-me-a-card-pal-.git
-   cd throw-me-a-card-pal-
-   ```
+### Install dependencies
 
-2. Create a virtual environment (recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+pip install -r requirements.txt
 
-3. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+---
 
-4. Create a `.env` file in the root directory with your Discord bot token:
-   ```env
-   TOKEN=your_discord_bot_token_here
-   ```
+## 🔑 Environment Variables
 
-5. Run the bot:
-   ```bash
-   python bot.py
-   ```
+Create a .env file:
 
-## Usage
+DISCORD_BOT_TOKEN=your_discord_bot_token  
+GEMINI_API_KEY=your_gemini_api_key
 
-Once the bot is running and connected to your Discord server, you can use the following commands (all commands use `?` as prefix):
+---
 
-### Card Commands
-- `?card` - Draws a random card from the deck
-- `?shuffle` - Shuffles the deck, returning all cards to the deck
-<img width="1029" height="689" alt="image" src="https://github.com/user-attachments/assets/6f08cb21-1423-43f1-a123-5c79e62c8f3e" />
+## 📚 Building the Rulebook Database (Cowboy AI)
 
+Place your legally acquired Sacramento RPG PDF:
 
-### Dice Commands
-- `?1d20` - Rolls a single 20-sided die
-- `?2d6+3` - Rolls 2 six-sided dice and adds 3 to the total
-- `?d100` - Rolls a 100-sided die
-- `?2d20kh` - Rolls 2 twenty-sided dice and keeps the highest value
-- `?4d6kl3` - Rolls 4 six-sided dice and keeps the lowest 3 values
-<img width="540" height="315" alt="image" src="https://github.com/user-attachments/assets/6a27d283-1d92-446e-b8dd-c334672e6d42" />
+assets/pdf/sacramento.pdf
 
-### Coin Command
-- `?coin` - Flips a coin (results in "Heads" or "Tails")
-<img width="986" height="669" alt="image" src="https://github.com/user-attachments/assets/d050bdf6-37b4-447d-8a7e-a125e4ccbb43" />
+Run the ingestion pipeline:
 
+python scripts/extract_pdf.py  
+python scripts/chunk_text.py  
+python scripts/build_embeddings.py
 
-## Configuration
+This generates:
 
-The bot has configurable limits defined in `core/config.py`:
-- `MAX_DICE`: Maximum number of dice that can be rolled at once (default: 20)
-- `MAX_FACES`: Maximum number of faces on a die (default: 100)
+data/embeddings.db
 
-## Audio Support
+Which Cowboy AI uses for semantic rule search.
 
-The bot plays sound effects when special cards are drawn (Jokers). These sounds are stored in the `music/` directory. To add a sound effect for a card, create an MP3 file named after the card using underscores instead of spaces (e.g., `joker!.mp3` for "Joker!" card).
+---
 
-For audio to work properly, ensure that FFmpeg is installed and accessible from your system PATH, and that you have PyNaCl installed (which is included in requirements.txt).
+## 🤠 Running the Bot
 
-## Contributing
+python bot.py
 
-Feel free to submit issues and enhancement requests via GitHub. Pull requests are welcome!
+In Discord:
+
+?rules How does the cover mechanic works?
+
+---
+
+## 🎮 Other Commands
+
+### Cards
+- ?card → draw a card  
+- ?shuffle → reshuffle deck  
+
+### Dice
+- ?1d20  
+- ?2d6+3  
+- ?4d6kl3  
+- ?2d20kh  
+
+### Coin
+- ?coin  
+
+---
+
+## 🔊 Audio Support
+
+Joker sound effects live in:
+
+music/
+
+Ensure FFmpeg is installed and accessible in PATH.
+
+---
+
+## 🚀 Deployment
+
+The bot can be deployed on Railway or any VPS.  
+Just upload the project, provide .env variables, and include your locally generated data/embeddings.db.
+
+---
+
+## ❤️ Final Words
+
+This project was built to make Sacramento RPG tables faster, smoother, and more immersive.
+
+Saddle up — the West has rules, and Cowboy AI knows them.

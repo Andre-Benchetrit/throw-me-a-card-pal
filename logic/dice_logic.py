@@ -6,7 +6,7 @@ TERM_PATTERN = re.compile(r"[+-]?\s*[^+-]+")
 
 DICE_TERM_PATTERN = re.compile(
     r"""
-    (\d+)              # quantidade
+    (\d*)              # quantidade (opcional)
     d
     (\d+)              # faces
     \s*
@@ -41,8 +41,8 @@ def roll_expression(expr: str) -> RollResult:
         match = DICE_TERM_PATTERN.fullmatch(clean)
 
         if match:
-            qtd, faces, keep_raw, keep_n = match.groups()
-            qtd = int(qtd)
+            qtd_str, faces, keep_raw, keep_n = match.groups()
+            qtd = int(qtd_str) if qtd_str else 1  # Se não houver quantidade, assume 1
             faces = int(faces)
 
             if qtd > MAX_DICE:
