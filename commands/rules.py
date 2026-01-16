@@ -26,10 +26,19 @@ async def rules(ctx, *, question):
         await message.edit(embed=response_embed)
 
     except Exception as e:
-        error_embed = discord.Embed(
-            title="💥 Algo deu errado...",
-            description="O revólver emperrou ao consultar o livro.",
-            color=0x8B0000
-        )
+        # Check if it's a 429 RESOURCE_EXHAUSTED error from Google API
+        error_str = str(e).lower()
+        if "resource_exhausted" in error_str or ("429" in error_str and "exhausted" in error_str):
+            error_embed = discord.Embed(
+                title="Calma-la, cowboy! 🐎",
+                description="Você está fazendo perguntas rápido demais. Me dá só um minutinho!",
+                color=0xFFD700
+            )
+        else:
+            error_embed = discord.Embed(
+                title="💥 Algo deu errado...",
+                description="O revólver emperrou ao consultar o livro.",
+                color=0x8B0000
+            )
         await message.edit(embed=error_embed)
         print(e)

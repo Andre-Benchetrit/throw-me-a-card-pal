@@ -2,6 +2,8 @@ import sqlite3
 import numpy as np
 from utils.embedding_service import embed
 from core.config import STOPWORDS
+from utils.rerank_service import rerank
+
 
 DB_PATH = "data/embeddings.db"
 
@@ -60,7 +62,7 @@ def search_keywords(keywords, limit_per_word=2):
     return results
 
 
-def search(query, top_k=8):
+def search(query, top_k=15):
     query_embedding = np.array(embed(query), dtype=np.float32)
 
     vector_results = search_vector(query_embedding, top_k)
@@ -78,7 +80,9 @@ def search(query, top_k=8):
         else:
             combined[r["text"]]["score"] += r["score"]
 
-    final_results = list(combined.values())
-    final_results.sort(key=lambda x: x["score"], reverse=True)
+    candidates = list(combined.values())
 
-    return final_results[:top_k]
+    reranked = rerank(query, candidates)
+
+    return reranked[:top_k]
+

@@ -1,5 +1,5 @@
 from core.vector_search import search
-from core.gemini import client, model
+from core.gemini import genai, model
 
 SYSTEM_PROMPT = """
 Você é um assistente cowboy que responde dúvidas sobre regras do RPG Sacramento.
@@ -30,9 +30,11 @@ Pergunta: {question}
 Resposta:
 """
 
-    response = client.models.generate_content(
-        model=model,
-        contents=prompt
-    )
-
-    return response.text.strip()
+    try:
+        response = genai.GenerativeModel(model).generate_content(
+            contents=prompt
+        )
+        return response.text.strip()
+    except Exception as e:
+        # Re-raise the exception so it can be caught by the command handler
+        raise e
